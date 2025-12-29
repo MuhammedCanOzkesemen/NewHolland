@@ -1,0 +1,46 @@
+{% extends "site/base.html" %}
+
+{% block title %}{{ series.name }} | New Holland Kars{% endblock %}
+
+{% block content %}
+<h1>{{ series.name }}</h1>
+
+{% if series.description %}
+<p>{{ series.description }}</p>
+{% endif %}
+
+<h2>Modeller</h2>
+
+<div class="grid">
+    {% for m in models %}
+        <a class="card" href="/models/{{ m.slug }}/" style="color:inherit; text-decoration:none;">
+            {% if m.hero_image %}
+                <img src="{{ m.hero_image.url }}" alt="{{ m.name }}">
+            {% else %}
+                <img alt="{{ m.name }}">
+            {% endif %}
+
+            <div class="p">
+                <div class="badge">Model</div>
+                <h3 style="margin:10px 0 0 0;">{{ m.name }}</h3>
+
+                {% if m.short_summary %}
+                    <p style="margin:8px 0 0 0;">{{ m.short_summary }}</p>
+                {% else %}
+                    <p style="margin:8px 0 0 0;">Detay ve teknik bilgiler için tıklayın.</p>
+                {% endif %}
+            </div>
+        </a>
+    {% empty %}
+        <p>Bu grup için model eklenmedi.</p>
+    {% endfor %}
+</div>
+
+<hr>
+
+<h2>Bilgi & Fiyat</h2>
+<p>Fiyatlar ve seçenekler değişebilir. En doğru bilgi için bayimize bekleriz.</p>
+<p><a href="/iletisim/">Konum ve İletişim →</a></p>
+
+<p><a href="/tractors/">← Traktörlere dön</a></p>
+{% endblock %}

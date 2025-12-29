@@ -1,0 +1,71 @@
+{% extends "site/base.html" %}
+
+{% block title %}{{ model.name }} | New Holland Kars{% endblock %}
+
+{% block content %}
+<h1>{{ model.name }}</h1>
+<p><strong>{{ model.series.name }}</strong></p>
+
+{% if model.hero_image %}
+<p>
+    <img src="{{ model.hero_image.url }}" alt="{{ model.name }}" style="max-width: 100%; height: auto; border-radius: 10px;">
+</p>
+{% endif %}
+
+{% if model.short_summary %}
+<p style="font-size: 16px;"><strong>{{ model.short_summary }}</strong></p>
+{% else %}
+<p style="font-size: 16px;"><strong>Kars şartlarına uygun seçenekler için bayimize bekleriz.</strong></p>
+{% endif %}
+
+<div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+    <div class="card">
+        <div class="p">
+            <div class="badge">Hızlı Bilgi</div>
+            <p style="margin:10px 0 0 0;">Fiyat ve seçenekler değişebilir.</p>
+            <p style="margin:8px 0 0 0;">En doğru bilgi için WhatsApp veya bayimiz.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="p">
+            <div class="badge">Pazarlık</div>
+            <p style="margin:10px 0 0 0;">Her traktörde pazarlık payı vardır.</p>
+            <p style="margin:8px 0 0 0;"><a href="/iletisim/">İletişim →</a></p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="p">
+            <div class="badge">Broşür</div>
+            {% if model.brochure_pdf %}
+                <p style="margin:10px 0 0 0;"><a href="{{ model.brochure_pdf.url }}" target="_blank">📄 Broşürü Gör / İndir</a></p>
+            {% else %}
+                <p style="margin:10px 0 0 0;">Broşür dosyası eklenecek.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if model.description %}
+<p style="margin-top:16px;">{{ model.description }}</p>
+{% endif %}
+
+<h2>Teknik Bilgiler</h2>
+
+{% for g in spec_groups %}
+    <h3>{{ g.title }}</h3>
+    <ul>
+        {% for it in g.items.all %}
+            <li>{{ it.label }}: {{ it.value }}{% if it.unit %} {{ it.unit }}{% endif %}</li>
+        {% empty %}
+            <li>Bu bölüm için bilgi yok.</li>
+        {% endfor %}
+    </ul>
+{% empty %}
+<p>Teknik bilgiler için bayimize bekleriz.</p>
+{% endfor %}
+
+<hr>
+<p><a href="/tractors/{{ model.series.slug }}/">← {{ model.series.name }} sayfasına dön</a></p>
+{% endblock %}

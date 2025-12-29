@@ -1,0 +1,26 @@
+{% extends "site/base.html" %}
+
+{% block title %}Traktörler | New Holland Kars{% endblock %}
+
+{% block content %}
+<h1>Traktörler</h1>
+<p>Traktör gruplarını seçip modelleri görebilirsiniz.</p>
+
+<div class="grid">
+    {% for s in series %}
+        <a class="card" href="/tractors/{{ s.slug }}/" style="color:inherit; text-decoration:none;">
+            <div class="p">
+                <div class="badge">Grup</div>
+                <h3 style="margin:10px 0 0 0;">{{ s.name }}</h3>
+                {% if s.short_summary %}
+                    <p style="margin:8px 0 0 0;">{{ s.short_summary }}</p>
+                {% else %}
+                    <p style="margin:8px 0 0 0;">Modelleri görmek için tıklayın.</p>
+                {% endif %}
+            </div>
+        </a>
+    {% empty %}
+        <p>Şu an listelenecek traktör yok.</p>
+    {% endfor %}
+</div>
+{% endblock %}
